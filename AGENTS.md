@@ -28,11 +28,17 @@ uv run mcp-reddit                        # run the server (stdio transport)
 
 **Resolved issue (was open 2026-09-27):** `pyproject.toml` now pins `mcp[cli]<2.0.0`, so a fresh
 `uv sync` no longer free-resolves into the `mcp>=2.0` `FastMCP` rename that broke
-`from mcp.server.fastmcp import FastMCP`. `uv.lock` is still not committed; if the pin is ever
+`from mcp.server.fastmcp import FastMCP`. `uv.lock` is committed; if the pin is ever
 loosened, re-verify `uv run python -c "import mcp_reddit.server"` after `uv sync`.
 
 A `pytest` suite covers tool registration and the formatting/retry helpers (`dev` optional-dependency
 group). Extend it alongside any new tool or retry-logic change.
+
+## Releasing
+
+Bump the version in `pyproject.toml` and `server.json` together, then push a `v<version>` tag.
+`release.yml` checks the three agree, runs the tests, publishes to PyPI via Trusted Publishing, and
+then publishes `server.json` to the MCP registry. No tokens are stored in the repo.
 
 ## Standards this repo owns
 

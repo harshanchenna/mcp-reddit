@@ -9,7 +9,7 @@ description = "MCP server for Reddit's public JSON API"
 readme = "README.md"
 license = { text = "MIT" }
 authors = [
-    { name = "Harshan Chenna", email = "harshu.c18@gmail.com" }
+    { name = "Harshan Chenna", email = "53590198+harshanchenna@users.noreply.github.com" }
 ]
 keywords = ["mcp", "reddit", "claude"]
 classifiers = [
