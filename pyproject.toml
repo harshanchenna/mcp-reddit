@@ -3,18 +3,38 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "mcp-reddit"
+name = "harshanchenna-mcp-reddit"
 version = "0.1.0"
 description = "MCP server for Reddit's public JSON API"
 readme = "README.md"
+license = { text = "MIT" }
+authors = [
+    { name = "Harshan Chenna", email = "harshu.c18@gmail.com" }
+]
+keywords = ["mcp", "reddit", "claude"]
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+]
 requires-python = ">=3.11"
 dependencies = [
-    "mcp[cli]>=1.0.0",
+    "mcp[cli]>=1.0.0,<2.0.0",
     "requests>=2.31.0",
 ]
 
+[project.optional-dependencies]
+dev = ["pytest>=8.0.0"]
+
+[project.urls]
+Homepage = "https://github.com/harshanchenna/mcp-reddit"
+Repository = "https://github.com/harshanchenna/mcp-reddit"
+Issues = "https://github.com/harshanchenna/mcp-reddit/issues"
+
 [project.scripts]
-mcp-reddit = "server:main"
+mcp-reddit = "mcp_reddit.server:main"
 
 [tool.hatch.build.targets.wheel]
-include = ["server.py"]
+packages = ["src/mcp_reddit"]

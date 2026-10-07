@@ -1,7 +1,14 @@
 # mcp-reddit
 
-MCP server for Reddit's public JSON API — browse posts, search threads, inspect subreddits and users.
-Part of the `trellis-mcp-servers` collection.
+<!-- mcp-name: io.github.harshanchenna/mcp-reddit -->
+
+MCP server for Reddit's public JSON API — browse posts, search threads, inspect subreddits and users, no API key or OAuth required.
+
+## Quick start
+
+```bash
+uvx --from harshanchenna-mcp-reddit mcp-reddit
+```
 
 ## Tools
 
@@ -19,9 +26,30 @@ Part of the `trellis-mcp-servers` collection.
 
 ## Usage
 
-### Install
+### Add to Claude Code (published package)
 
 ```bash
+claude mcp add reddit -- uvx --from harshanchenna-mcp-reddit mcp-reddit
+```
+
+### Add to Claude Desktop (published package)
+
+```json
+{
+  "mcpServers": {
+    "reddit": {
+      "command": "uvx",
+      "args": ["--from", "harshanchenna-mcp-reddit", "mcp-reddit"]
+    }
+  }
+}
+```
+
+### Install from a local clone
+
+```bash
+git clone https://github.com/harshanchenna/mcp-reddit.git
+cd mcp-reddit
 uv sync
 ```
 
@@ -31,10 +59,12 @@ uv sync
 uv run --with-editable . mcp-reddit
 ```
 
-### Add to Claude Code
+### Add to Claude Code (from a local clone)
+
+Replace `/path/to/mcp-reddit` with your actual clone path:
 
 ```bash
-claude mcp add reddit -- ~/.local/bin/uv run --with-editable /home/harshu/projects/trellis-mcp-servers/reddit mcp-reddit
+claude mcp add reddit -- uv run --with-editable /path/to/mcp-reddit mcp-reddit
 ```
 
 ## Configuration

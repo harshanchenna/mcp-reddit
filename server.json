@@ -1,0 +1,35 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.harshanchenna/mcp-reddit",
+  "description": "MCP server for Reddit's public JSON API: browse posts, search threads, and inspect subreddits and users, no API key or OAuth required.",
+  "repository": {
+    "url": "https://github.com/harshanchenna/mcp-reddit.git",
+    "source": "github"
+  },
+  "version": "0.1.0",
+  "packages": [
+    {
+      "registryType": "pypi",
+      "registryBaseUrl": "https://pypi.org",
+      "identifier": "harshanchenna-mcp-reddit",
+      "version": "0.1.0",
+      "runtimeHint": "uvx",
+      "runtimeArguments": [
+        { "type": "positional", "value": "--from", "valueHint": "from-flag" },
+        { "type": "positional", "value": "harshanchenna-mcp-reddit", "valueHint": "package" },
+        { "type": "positional", "value": "mcp-reddit", "valueHint": "entrypoint" }
+      ],
+      "transport": {
+        "type": "stdio"
+      },
+      "environmentVariables": [
+        {
+          "name": "REDDIT_USER_AGENT",
+          "description": "Custom User-Agent header sent to Reddit's public JSON API",
+          "isRequired": false,
+          "isSecret": false
+        }
+      ]
+    }
+  ]
+}
