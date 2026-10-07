@@ -1,0 +1,43 @@
+name: release
+# Push a tag like v0.1.0 to publish. PyPI uses Trusted Publishing (OIDC, no token) through the
+# `pypi` environment; the MCP registry uses GitHub OIDC. Nothing here needs a stored secret.
+on:
+  push:
+    tags: ["v*"]
+
+jobs:
+  pypi:
+    runs-on: ubuntu-latest
+    environment: pypi
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v5
+      - uses: astral-sh/setup-uv@v6
+      - name: Tag matches package version
+        run: |
+          tag="${GITHUB_REF_NAME#v}"
+          ver="$(uv version --short)"
+          test "$tag" = "$ver" || { echo "tag $tag != pyproject version $ver"; exit 1; }
+          test "$(jq -r .version server.json)" = "$ver" || { echo "server.json version != $ver"; exit 1; }
+      - run: uv run --extra dev pytest -q
+      - run: uv build
+      - uses: pypa/gh-action-pypi-publish@release/v1
+
+  mcp-registry:
+    needs: pypi
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v5
+      - name: Install mcp-publisher
+        run: |
+          curl -fsSL "https://github.com/modelcontextprotocol/registry/releases/latest/download/mcp-publisher_linux_amd64.tar.gz" | tar xz mcp-publisher
+      - run: ./mcp-publisher login github-oidc
+      - name: Publish (retry while the new PyPI release propagates)
+        run: |
+          for i in 1 2 3 4 5 6; do ./mcp-publisher publish && exit 0; echo "retry $i"; sleep 30; done
+          exit 1
